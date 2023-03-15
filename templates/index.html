@@ -14,10 +14,19 @@
 <body>
 
     <h1>Face Recognition</h1>
-<!--    <img src="/video_feed">-->
     <div>
-        <button type="button" class="btn btn-primary btn-lg " id="btn-predict">新增学生</button>
+        <button type="button" class="btn btn-primary btn-lg " id="btn-add-face">新增学生</button>
+        <form id="form-data">
+          <div class="field">
+            <input type="text" name="name"required>
+            <label>新增学生姓名：</label>
+            <div id="alert"></div>
+          </div>
+        </form>
+        <button type="button" class="btn btn-primary btn-lg " id="btn-predict">检测学生</button>
     </div>
+    <div id="success-tips">新增成功</div>
+    <img src="/video_feed">
 <!--    <video id="video" width="640" height="480" autoplay></video>-->
 <!--    <canvas id="canvas" width="640" height="480"></canvas>-->
 </body>

@@ -11,7 +11,7 @@ import cv2
 import os
 
 # construct the argument parser and parse the arguments
-def extract(img):
+def extract(image,name):
 	ap = argparse.ArgumentParser()
 
 	ap.add_argument("-i", "--dataset", required=True,
@@ -26,9 +26,10 @@ def extract(img):
 
 	# load the face detector from disk
 	print("Loading Caffe based face detector to localize faces in an image")
-	protoPath = os.path.sep.join([args["detector"], "deploy.prototxt"])
+	protoPath = os.path.sep.join([args["detector"], "face_detection_model/deploy.prototxt"])
 	modelPath = os.path.sep.join([args["detector"],
-								  "res10_300x300_ssd_iter_140000.caffemodel"])
+								  "face_detection_model/res10_300x300_ssd_iter_140000.caffemodel"])
+	outputPath = os.path.sep.join([args["embeddings"], "output/embeddings.pickle"])
 	detector = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
 
 	# load the face embedding model from disk
@@ -37,7 +38,7 @@ def extract(img):
 
 	# grab the paths to the input images in our dataset
 	print("Load image dataset..")
-	imagePaths = list(paths.list_images(args["dataset"]))
+	###fix: imagePaths = list(paths.list_images(args["dataset"]))
 
 	# initialize our lists of extracted facial embeddings and
 	# corresponding people names
@@ -48,14 +49,14 @@ def extract(img):
 	total = 0
 
 	# loop over the image paths
-	for (i, imagePath) in enumerate(imagePaths):
+	###fix: for (i, imagePath) in enumerate(imagePaths):
 	# extract the person name from the image path
-		name = imagePath.split(os.path.sep)[-2]
+		###fix: name = imagePath.split(os.path.sep)[-2]
 
 	# load the image, resize it to have a width of 600 pixels (while
 	# maintaining the aspect ratio), and then grab the image
 	# dimensions
-	image = cv2.imread(imagePath)
+	###fix: image = cv2.imread(imagePath)
 	##########################
 	image = imutils.resize(image, width=600)
 	(h, w) = image.shape[:2]
@@ -108,7 +109,7 @@ def extract(img):
 
 	# dump the facial embeddings + names to disk
 	data = {"embeddings": knownEmbeddings, "names": knownNames}
-	f = open(args["embeddings"], "wb")
+	f = open(outputPath, "wb")
 	f.write(pickle.dumps(data))
 	f.close()
 

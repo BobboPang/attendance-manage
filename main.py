@@ -11,22 +11,12 @@ camera = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 embedder = cv2.dnn.readNetFromTorch('nn4.small2.v1.t7')
 
-if os.path.exists("embeddings.pickle"):
-    with open("embeddings.pickle", "rb") as f:
-        data = pickle.load(f)
-    X_train, y_train = data["embeddings"], data["labels"]
-else:
-    X_train = np.empty(shape=(0, 128))
-    y_train = np.empty(shape=(0,), dtype=np.int32)
-
-clf = KNeighborsClassifier(n_neighbors=3, metric="euclidean")
+clf = KNeighborsClassifier(n_neighbors=1, metric="euclidean")
 
 
 
 def detect_face(img):
-    print(img.shape)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # clf.fit(X_train, y_train)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4,minSize=(80,80))
     return faces
 
@@ -47,16 +37,6 @@ def generate_frames():
                 cv2.imshow('Face Recognition', frame)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
-                # preds = clf.predict_proba(vec)[0]
-                # j = np.argmax(preds)
-                # proba = preds[j]
-                # if proba > 0.7:
-                #     name = clf.classes_[j]
-                #     cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
-                #     cv2.putText(frame, name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-                #     cv2.imshow('Face Recognition', frame)
-                #     if cv2.waitKey(1) & 0xFF == ord('q'):
-                #         break
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
@@ -72,40 +52,81 @@ def index():
 def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/predict', methods=['POST'])
+def predict():
+    success, frame = camera.read()
+    if not success:
+        print('camera error!')
+        return jsonify({'status': "摄像头错误"})
+    else:
+        if os.path.exists("output/embeddings.pickle"):
+            with open("output/embeddings.pickle", "rb") as f:
+                data = pickle.load(f)
+            X_train, y_train = data["embeddings"], data["name"]
+            print(y_train)
+            clf.fit(X_train, y_train)
+            faces = detect_face(frame)
+            if len(faces) != 1:
+                return jsonify({'status': "未识别到人脸"})
+            faces = detect_face(frame)
+            for (x, y, w, h) in faces:
+                face = frame[y:y + h, x:x + w]
+                faceBlob = cv2.dnn.blobFromImage(face, 1.0 / 255, (96, 96), (0, 0, 0), swapRB=True, crop=False)
+                embedder.setInput(faceBlob)
+                vec = embedder.forward()
+                preds = clf.predict_proba(vec)[0]
+                j = np.argmax(preds)
+                proba = preds[j]
+                if proba > 0.7:
+                    name = clf.classes_[j]
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
+                    cv2.putText(frame, name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                    return jsonify({'status': "已验证",'name':name})
+        else: return jsonify({'status': "未找到记录"})
+
 
 @app.route('/add_face', methods=['POST'])
 def add_face():
-    name = request.form['name']
+    name = request.form.get("name")
     embeddings = []
+    print('receive request!',name)
     for i in range(3):
         success, frame = camera.read()
         if not success:
+            print('camera error!')
             break
         else:
             faces = detect_face(frame)
             if len(faces) != 1:
                 continue
             (x, y, w, h) = faces[0]
+            print('detected face!')
         face = frame[y:y+h, x:x+w]
         faceBlob = cv2.dnn.blobFromImage(face, 1.0 / 255, (96, 96), (0, 0, 0), swapRB=True, crop=False)
         embedder.setInput(faceBlob)
         vec = embedder.forward()
         embeddings.append(vec.flatten())
+        print('embeddings:',embeddings)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         cv2.putText(frame, name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        cv2.imshow('Add Face', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-        if len(embeddings) == 3:
+    if len(embeddings) >= 3:
+        if os.path.exists("output/embeddings.pickle"):
+            with open("output/embeddings.pickle", "rb") as f:
+                data = pickle.load(f)
+            X_train, y_train = data["embeddings"], data["name"]
             X_train.append(np.mean(embeddings, axis=0))
             y_train.append(name)
-            clf.fit(X_train, y_train)
-            data = {"embeddings": X_train, "labels": y_train}
-            with open("embeddings.pickle", "wb") as f:
-                pickle.dump(data, f)
-            return jsonify({'success': True})
         else:
-            return jsonify({'success': False})
+            X_train = []
+            y_train = []
+            X_train.append(np.mean(embeddings, axis=0))
+            y_train.append(name)
+        data = {"embeddings": X_train, "name": y_train}
+        with open("output/embeddings.pickle", "wb") as f:
+            pickle.dump(data, f)
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
 
 if __name__ == '__main__':
     app.run(debug=True)
