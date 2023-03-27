@@ -1,0 +1,61 @@
+Date : 2023-03-21 15:37:12
+Directory : d:\Projects\AttendanceManage\attendance-admin
+Total : 20 files,  9880 codes, 93 comments, 37 blanks, all 10010 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          2 |      9,045 |          0 |          2 |      9,047 |
+| vue                |          8 |        672 |         38 |         19 |        729 |
+| JavaScript         |          7 |        120 |         42 |          9 |        171 |
+| Markdown           |          1 |         19 |          0 |          6 |         25 |
+| HTML               |          1 |         16 |          1 |          1 |         18 |
+| JSON with Comments |          1 |          8 |         12 |          0 |         20 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |         20 |      9,880 |         93 |         37 |     10,010 |
+| . (Files)                                                                            |          7 |      9,104 |         12 |         11 |      9,127 |
+| public                                                                               |          1 |         16 |          1 |          1 |         18 |
+| src                                                                                  |         12 |        760 |         80 |         25 |        865 |
+| src (Files)                                                                          |          2 |         51 |          0 |          8 |         59 |
+| src\router                                                                           |          1 |         38 |         31 |          1 |         70 |
+| src\store                                                                            |          2 |         36 |         11 |          3 |         50 |
+| src\store (Files)                                                                    |          1 |          5 |          2 |          2 |          9 |
+| src\store\modules                                                                    |          1 |         31 |          9 |          1 |         41 |
+| src\views                                                                            |          7 |        635 |         38 |         13 |        686 |
+| src\views (Files)                                                                    |          5 |        520 |         38 |         10 |        568 |
+| src\views\login                                                                      |          1 |        112 |          0 |          2 |        114 |
+| src\views\modules                                                                    |          1 |          3 |          0 |          1 |          4 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                             | language           | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Projects\AttendanceManage\attendance-admin\.eslintrc.js                           | JavaScript         |         25 |          0 |          1 |         26 |
+| d:\Projects\AttendanceManage\attendance-admin\README.md                              | Markdown           |         19 |          0 |          6 |         25 |
+| d:\Projects\AttendanceManage\attendance-admin\babel.config.js                        | JavaScript         |          3 |          0 |          1 |          4 |
+| d:\Projects\AttendanceManage\attendance-admin\jsconfig.json                          | JSON with Comments |          8 |         12 |          0 |         20 |
+| d:\Projects\AttendanceManage\attendance-admin\package-lock.json                      | JSON               |      9,007 |          0 |          1 |      9,008 |
+| d:\Projects\AttendanceManage\attendance-admin\package.json                           | JSON               |         38 |          0 |          1 |         39 |
+| d:\Projects\AttendanceManage\attendance-admin\public\index.html                      | HTML               |         16 |          1 |          1 |         18 |
+| d:\Projects\AttendanceManage\attendance-admin\src\App.vue                            | vue                |         37 |          0 |          6 |         43 |
+| d:\Projects\AttendanceManage\attendance-admin\src\main.js                            | JavaScript         |         14 |          0 |          2 |         16 |
+| d:\Projects\AttendanceManage\attendance-admin\src\router\index.js                    | JavaScript         |         38 |         31 |          1 |         70 |
+| d:\Projects\AttendanceManage\attendance-admin\src\store\index.js                     | JavaScript         |          5 |          2 |          2 |          9 |
+| d:\Projects\AttendanceManage\attendance-admin\src\store\modules\user.js              | JavaScript         |         31 |          9 |          1 |         41 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\AboutView.vue                | vue                |          5 |          0 |          1 |          6 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\HomeView.vue                 | vue                |        184 |         38 |          2 |        224 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\addStudent.vue               | vue                |        108 |          0 |          3 |        111 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\attendance.vue               | vue                |        111 |          0 |          2 |        113 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\login\index.vue              | vue                |        112 |          0 |          2 |        114 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\modules\teacherDashboard.vue | vue                |          3 |          0 |          1 |          4 |
+| d:\Projects\AttendanceManage\attendance-admin\src\views\register.vue                 | vue                |        112 |          0 |          2 |        114 |
+| d:\Projects\AttendanceManage\attendance-admin\vue.config.js                          | JavaScript         |          4 |          0 |          1 |          5 |
+| Total                                                                                |                    |      9,880 |         93 |         37 |     10,010 |
++--------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

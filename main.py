@@ -4,9 +4,14 @@ from flask import Flask, Response, render_template, request, jsonify
 from sklearn.neighbors import KNeighborsClassifier
 import os
 import pickle
+
+from flask_cors import CORS
+
+
 #其中包含人脸图像的特征向量。特征向量是从人脸图像中提取的一组数值，用于描述人脸的某些关键特征，如眼睛、鼻子、嘴巴等的位置、形状、大小等信息。这些特征向量通常被用于人脸识别、人脸验证、人脸聚类等应用中，它们可以作为人脸图像的一种紧凑的表示方式，使得人脸图像可以更容易地进行处理和比较。
 #在这个示例中，我们使用了OpenCV中提供的深度学习模型（如FaceNet）来计算人脸图像的特征向量，并将这些特征向量存储在embeddings列表中。这些特征向量将被用作训练数据，以训练一个分类器，该分类器可以根据新的人脸图像来预测该人脸属于哪个用户。
 app = Flask(__name__)
+CORS(app, resources=r'/*')
 camera = cv2.VideoCapture(0)
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 embedder = cv2.dnn.readNetFromTorch('nn4.small2.v1.t7')

@@ -1,0 +1,22 @@
+"filename", "language", "JavaScript", "vue", "JSON", "Markdown", "JSON with Comments", "HTML", "comment", "blank", "total"
+"d:\Projects\AttendanceManage\attendance-admin\.eslintrc.js", "JavaScript", 25, 0, 0, 0, 0, 0, 0, 1, 26
+"d:\Projects\AttendanceManage\attendance-admin\README.md", "Markdown", 0, 0, 0, 19, 0, 0, 0, 6, 25
+"d:\Projects\AttendanceManage\attendance-admin\babel.config.js", "JavaScript", 3, 0, 0, 0, 0, 0, 0, 1, 4
+"d:\Projects\AttendanceManage\attendance-admin\jsconfig.json", "JSON with Comments", 0, 0, 0, 0, 8, 0, 12, 0, 20
+"d:\Projects\AttendanceManage\attendance-admin\package-lock.json", "JSON", 0, 0, 9007, 0, 0, 0, 0, 1, 9008
+"d:\Projects\AttendanceManage\attendance-admin\package.json", "JSON", 0, 0, 38, 0, 0, 0, 0, 1, 39
+"d:\Projects\AttendanceManage\attendance-admin\public\index.html", "HTML", 0, 0, 0, 0, 0, 16, 1, 1, 18
+"d:\Projects\AttendanceManage\attendance-admin\src\App.vue", "vue", 0, 37, 0, 0, 0, 0, 0, 6, 43
+"d:\Projects\AttendanceManage\attendance-admin\src\main.js", "JavaScript", 14, 0, 0, 0, 0, 0, 0, 2, 16
+"d:\Projects\AttendanceManage\attendance-admin\src\router\index.js", "JavaScript", 38, 0, 0, 0, 0, 0, 31, 1, 70
+"d:\Projects\AttendanceManage\attendance-admin\src\store\index.js", "JavaScript", 5, 0, 0, 0, 0, 0, 2, 2, 9
+"d:\Projects\AttendanceManage\attendance-admin\src\store\modules\user.js", "JavaScript", 31, 0, 0, 0, 0, 0, 9, 1, 41
+"d:\Projects\AttendanceManage\attendance-admin\src\views\AboutView.vue", "vue", 0, 5, 0, 0, 0, 0, 0, 1, 6
+"d:\Projects\AttendanceManage\attendance-admin\src\views\HomeView.vue", "vue", 0, 184, 0, 0, 0, 0, 38, 2, 224
+"d:\Projects\AttendanceManage\attendance-admin\src\views\addStudent.vue", "vue", 0, 108, 0, 0, 0, 0, 0, 3, 111
+"d:\Projects\AttendanceManage\attendance-admin\src\views\attendance.vue", "vue", 0, 111, 0, 0, 0, 0, 0, 2, 113
+"d:\Projects\AttendanceManage\attendance-admin\src\views\login\index.vue", "vue", 0, 112, 0, 0, 0, 0, 0, 2, 114
+"d:\Projects\AttendanceManage\attendance-admin\src\views\modules\teacherDashboard.vue", "vue", 0, 3, 0, 0, 0, 0, 0, 1, 4
+"d:\Projects\AttendanceManage\attendance-admin\src\views\register.vue", "vue", 0, 112, 0, 0, 0, 0, 0, 2, 114
+"d:\Projects\AttendanceManage\attendance-admin\vue.config.js", "JavaScript", 4, 0, 0, 0, 0, 0, 0, 1, 5
+"Total", "-", 120, 672, 9045, 19, 8, 16, 93, 37, 10010
