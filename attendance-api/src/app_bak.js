@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const conn = require("./dbConnection/dbConnection");
+const conn = require("../dbConnection/dbConnection");
 const port = process.env.PORT || 5000;
 var sql = "";
 app.use(express.static("public"));

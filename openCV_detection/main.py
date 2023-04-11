@@ -64,8 +64,8 @@ def predict():
         print('camera error!')
         return jsonify({'status': "摄像头错误"})
     else:
-        if os.path.exists("output/embeddings.pickle"):
-            with open("output/embeddings.pickle", "rb") as f:
+        if os.path.exists("../output/embeddings.pickle"):
+            with open("../output/embeddings.pickle", "rb") as f:
                 data = pickle.load(f)
             X_train, y_train = data["embeddings"], data["name"]
             print(y_train)
@@ -115,8 +115,8 @@ def add_face():
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         cv2.putText(frame, name, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     if len(embeddings) >= 3:
-        if os.path.exists("output/embeddings.pickle"):
-            with open("output/embeddings.pickle", "rb") as f:
+        if os.path.exists("../output/embeddings.pickle"):
+            with open("../output/embeddings.pickle", "rb") as f:
                 data = pickle.load(f)
             X_train, y_train = data["embeddings"], data["name"]
             X_train.append(np.mean(embeddings, axis=0))
@@ -127,7 +127,7 @@ def add_face():
             X_train.append(np.mean(embeddings, axis=0))
             y_train.append(name)
         data = {"embeddings": X_train, "name": y_train}
-        with open("output/embeddings.pickle", "wb") as f:
+        with open("../output/embeddings.pickle", "wb") as f:
             pickle.dump(data, f)
         return jsonify({'success': True})
     else:
