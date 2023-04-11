@@ -22,12 +22,15 @@
             type="primary"
             size="large"
             :loading="loading"
-            @click="handleLogin"
+            @click="handleVerifyFace"
             >打卡</el-button
           >
         </div>
-        <el-button size="small" :loading="loading" @click="handleLogin"
+        <el-button size="small" :loading="loading" @click="handleAddface"
           >添加人脸</el-button
+        >
+        <router-link v-if="form.role === 'teacher'" to="/statisticInfo"
+          >统计信息</router-link
         >
         <baidu-map
           class="bm-view"
@@ -40,6 +43,16 @@
         </baidu-map>
       </el-card>
     </div>
+    <el-dialog v-model="dialogVisible" :title="tipsTitle" width="30%">
+      <span>{{ tipsContent }}</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">
+            好的
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script setup>
@@ -52,16 +65,20 @@ import pinia from "@/store";
 import { useUserStore } from "@/store/modules/user";
 import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import BmCityList from "vue-baidu-map/components/controls/CityList.vue";
-
+import axios from "@/api/index.js";
 /**
  * 属性
  */
 const title = ref("考勤打卡");
-const loading = ref(false);
+const loading = ref(true);
 const form = reactive({
   username: "",
-  password: "",
+  role: "",
 });
+var dialogVisible = ref(false);
+var tipsContent=ref("");
+var tipsTitle=ref("");
+var localAddress=ref("");
 const isShowAnchor = ref(false);
 var BMapObj = reactive({});
 var mapObj = reactive({});
@@ -72,22 +89,47 @@ const userStore = useUserStore(pinia);
  * 函数
  */
 
-const handleLogin = async () => {
+function handleVerifyFace(){
+  
+  axios.post(
+      "/predict",
+      {name: form.username,},
+      (values) => {
+        console.log(values);
+        if(values.status=== '已验证通过')
+          handleCheck()
+        else{
+          tipsTitle="打卡情况";
+          tipsContent = "打卡失败，人脸验证未通过！"
+          dialogVisible.value=true;
+          }
+      },
+      (values) => {
+        ElMessage.error("请求失败！原因：", values);
+      },
+      "pythonRoot"
+    );
+}
+
+const handleCheck = async () => {
   loading.value = true;
   try {
     axios.post(
-      "/getUserInfo",
-      form,
+      "/check",
+      {name:form.username,
+        address: localAddress,
+        longitude: center.lng,
+        latitude: center.lat,},
       (values) => {
         console.log(values);
-        userStore.setUserInfo(values.data[0]);
-        router.push("/home");
+        tipsTitle="打卡详情";
+        tipsContent = values.msg === "打卡成功!" ? `${values.data.username}打卡成功,时间：${values.data.time},地址：${values.data.address}`:"打卡失败"
+        dialogVisible.value=true;
       },
       (values) => {
         ElMessage.error("请求失败！原因：", values);
       }
     );
-    router.push("/");
   } catch (error) {
     console.log("login error", error);
   } finally {
@@ -113,8 +155,10 @@ function handler({ BMap, map }) {
     var circle = new BMap.Circle(res.point, 60, { strokeColor: "Red", strokeWeight: 6, strokeOpacity: 0.7, Color: "Red", fillColor: "#f03" });
     map.addOverlay(marker);
     map.addOverlay(circle);
+    localAddress = res.address.province + res.address.city + res.address.district + res.address.street + res.address.street_number;
     var label = new BMap.Label(`${res.address.province + res.address.city + res.address.district + res.address.street + res.address.street_number}`, { offset: new BMap.Size(20, -10) }); //标注标签
     marker.setLabel(label); //设置标注说明
+    loading.value = false;
   });
 }
 function clickLocation(e) {
@@ -135,8 +179,34 @@ function clickLocation(e) {
     // });
   });
 }
+function handleAddface(){
+  try {
+    axios.post(
+      "/add_face",
+      {
+        name: form.username,
+      },
+      (values) => {
+        console.log(values);
+        tipsTitle="添加人脸";
+        tipsContent = values.success === true ? "添加人脸成功":"添加人脸失败"
+        dialogVisible.value=true;
+      },
+      (values) => {
+        ElMessage.error("请求失败！原因：", values);
+      },
+      "pythonRoot"
+    );
+  } catch (error) {
+    console.log("login error", error);
+  } finally {
+    loading.value = false;
+  }
+}
 onMounted(() => {
   form.username = userStore.getUserInfo().username;
+  form.role = userStore.getUserInfo().role;
+
   // var map = new BMapGL.Map("container");
 });
 </script>

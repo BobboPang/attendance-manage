@@ -35,6 +35,11 @@ export const router = createRouter({
       name: "AddStudent",
       component: () => import("@/views/addUser.vue"),
     },
+    {
+      path: "/statisticInfo",
+      name: "StatisticInfo",
+      component: () => import("@/views/statisticInfo.vue"),
+    },
     // {
     //   path: "/personalInfo",
     //   name: "PersonalInfo",

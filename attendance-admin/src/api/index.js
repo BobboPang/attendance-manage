@@ -1,5 +1,6 @@
 // 配置API接口地址
-var root = "http://localhost:5000";
+const root = "http://localhost:5002";
+const pythonRoot = "http://127.0.0.1:5000";
 // 引用axios
 var axios = require("axios");
 // 自定义判断元素类型JS
@@ -25,16 +26,17 @@ function filterNull(o) {
   }
   return o;
 }
-function apiAxios(method, url, params, success, failure) {
+function apiAxios(method, url, params, success, failure, urlRoot) {
   if (params) {
     params = filterNull(params);
   }
+  console.log(urlRoot);
   axios({
     method: method,
     url: url,
     data: method === "POST" || method === "PUT" ? params : null,
     params: method === "GET" || method === "DELETE" ? params : null,
-    baseURL: root,
+    baseURL: urlRoot === "pythonRoot" ? pythonRoot : root,
     withCredentials: false,
   })
     .then(function (res) {
@@ -61,16 +63,16 @@ function apiAxios(method, url, params, success, failure) {
 }
 // 返回在vue模板中的调用接口
 export default {
-  get: function (url, params, success, failure) {
-    return apiAxios("GET", url, params, success, failure);
+  get: function (url, params, success, failure, urlRoot) {
+    return apiAxios("GET", url, params, success, failure, urlRoot);
   },
-  post: function (url, params, success, failure) {
-    return apiAxios("POST", url, params, success, failure);
+  post: function (url, params, success, failure, urlRoot) {
+    return apiAxios("POST", url, params, success, failure, urlRoot);
   },
-  put: function (url, params, success, failure) {
-    return apiAxios("PUT", url, params, success, failure);
+  put: function (url, params, success, failure, urlRoot) {
+    return apiAxios("PUT", url, params, success, failure, urlRoot);
   },
-  delete: function (url, params, success, failure) {
-    return apiAxios("DELETE", url, params, success, failure);
+  delete: function (url, params, success, failure, urlRoot) {
+    return apiAxios("DELETE", url, params, success, failure, urlRoot);
   },
 };

@@ -18,6 +18,9 @@ const form = reactive({
   password: "",
   role: "",
 });
+var dialogVisible = ref(false);
+var tipsContent=ref("");
+var tipsTitle=ref("");
 /**
  * 函数
  */
@@ -30,17 +33,17 @@ const handleRegist = async () => {
       (values) => {
         console.log(values);
         userStore.setUserInfo(values.data);
-        router.push("/home");
+        tipsTitle="注册详情";
+        tipsContent = values.status === 200 ? `${values.data.username}注册成功`:`注册失败:${values.data.msg}`
+        dialogVisible.value=true;
+        setTimeout(() => {
+          router.push("/home");
+        }, 1500);
       },
       (values) => {
         ElMessage.error("请求失败！原因：", values);
       }
     );
-    // await loginStore.login(form)
-    // const user = await userStore.getUserInfo(loginStore.userName)
-    // const { id } = user
-    // await userStore.getPermission(id.toString())
-    // router.push("/");
   } catch (error) {
     console.log("login error", error);
   } finally {
@@ -83,6 +86,16 @@ onUnmounted(() => {
         </div>
       </el-card>
     </div>
+    <el-dialog v-model="dialogVisible" :title="tipsTitle" width="30%">
+      <span>{{ tipsContent }}</span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">
+            好的
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <style lang="less" scoped>
