@@ -9,37 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Student = void 0;
+exports.Class = void 0;
 var typeorm_1 = require("typeorm");
-var Student = exports.Student = /** @class */ (function () {
-    function Student() {
+var Class = exports.Class = /** @class */ (function () {
+    function Class() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Student.prototype, "id", void 0);
+    ], Class.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Student.prototype, "name", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Student.prototype, "password", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Student.prototype, "class", void 0);
+    ], Class.prototype, "name", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", Object)
-    ], Student.prototype, "course", void 0);
+    ], Class.prototype, "student", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Student.prototype, "code", void 0);
-    Student = __decorate([
+    ], Class.prototype, "teacher", void 0);
+    Class = __decorate([
         (0, typeorm_1.Entity)()
-    ], Student);
-    return Student;
+    ], Class);
+    return Class;
 }());

@@ -9,37 +9,57 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Student = void 0;
+exports.Attendance = void 0;
 var typeorm_1 = require("typeorm");
-var Student = exports.Student = /** @class */ (function () {
-    function Student() {
+var Attendance = exports.Attendance = /** @class */ (function () {
+    function Attendance() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Student.prototype, "id", void 0);
+    ], Attendance.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Student.prototype, "name", void 0);
+    ], Attendance.prototype, "studentCode", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Student.prototype, "password", void 0);
+    ], Attendance.prototype, "studentName", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Student.prototype, "class", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", Object)
-    ], Student.prototype, "course", void 0);
+    ], Attendance.prototype, "studentId", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Student.prototype, "code", void 0);
-    Student = __decorate([
+    ], Attendance.prototype, "teacherName", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Attendance.prototype, "courseId", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Attendance.prototype, "courseName", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Attendance.prototype, "time", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Attendance.prototype, "latitude", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Attendance.prototype, "longtitude", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Attendance.prototype, "address", void 0);
+    Attendance = __decorate([
         (0, typeorm_1.Entity)()
-    ], Student);
-    return Student;
+    ], Attendance);
+    return Attendance;
 }());
