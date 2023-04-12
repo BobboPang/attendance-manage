@@ -1,9 +1,15 @@
 import * as express from "express";
-import { Request, Response } from "express";
+import { Teacher } from "./entities/teacher.entity";
 import { Student } from "./entities/student.entity";
 import { AppDataSource } from "./dbConnection/app-data-source";
 import bodyParser = require("body-parser");
-import { route } from "./router";
+import { route } from "./router/index";
+import { Request, Response } from "express";
+const port = 5002;
+const app = express();
+app.use(express.static("public"));
+app.use(bodyParser.json());
+
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
@@ -12,23 +18,28 @@ AppDataSource.initialize()
     console.error("Error during Data Source initialization:", err);
   });
 // create and setup express app
-const app = express();
+
 // app.use(express.json());
-app.use(express.static("public"));
-app.use(bodyParser.json());
-app.use(route);
-// 跨域设置
-app.all("*", function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, If-Modified-Since");
-  next();
+app.use("/", route);
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+app.post("/getUserInfo", async function (req: Request, res: Response) {
+  const formReq = req.body;
+  console.log("recieve post request: getUserInfo");
+  if (formReq.role === "student") {
+    const teachers = await AppDataSource.getRepository(Student).findOneBy({
+      code: formReq.code,
+    });
+    res.send({ status: 200, msg: "查询用户成功!", data: teachers });
+  }
+  if (formReq.role === "teacher") {
+    const teacher = await AppDataSource.getRepository(Teacher).findOneBy({
+      code: formReq.code,
+    });
+    res.send({ status: 200, msg: "查询用户成功!", data: teacher });
+  }
 });
 
-/**
- * _____________________student________________________
- */
-
 // start express server
-app.listen(3000);
+app.listen(port, () => console.log(`Server running on the port : ${port}`));

@@ -12,10 +12,10 @@ export class Teacher {
     password: string
 
     @Column()
-    class: JSON
+    class: string
 
     @Column()
-    course: JSON
+    course: string
 
     @Column()
     code: string

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const conn = require("./dbConnection/dbConnection");
+const conn = require("../dbConnection/dbConnection");
 const port = process.env.PORT || 5002;
 var sql = "";
 app.use(express.static("public"));
@@ -10,7 +10,7 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 // 跨域设置
 app.all("*", function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, If-Modified-Since");

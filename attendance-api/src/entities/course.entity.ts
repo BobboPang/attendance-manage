@@ -9,7 +9,7 @@ export class Course {
     name: string
 
     @Column()
-    student: JSON
+    student: string
 
     @Column()
     teacher: string

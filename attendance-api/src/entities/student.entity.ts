@@ -15,7 +15,7 @@ export class Student {
     class: string
 
     @Column()
-    course: JSON
+    course: string
 
     @Column()
     code: string
